@@ -3,16 +3,16 @@
   	<div class="col-xs-12 col-md-6">
   		
   		<div>
-		  	<form [formGroup]="loginForm" (ngSubmit)="onSubmit($event)">
+		  	<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
 			  <div class="form-group">
 			    <label for="inputLoginEmail">Email</label>
 			    <input type="email" class="form-control" id="inputLoginEmail" aria-describedby="emailHelp" formControlName="inputLoginEmail">
 			   
-			    <div *ngIf="f.inputLoginEmail.invalid && f.inputLoginEmail.errors.required   && (f.inputLoginEmail.dirty || f.inputLoginEmail.touched)">
+			    <div *ngIf="f.inputLoginEmail.invalid && f.inputLoginEmail.errors.required   && (f.inputLoginEmail.dirty || f.inputLoginEmail.touched)" class="error-form-input">
 			      This Field is Required.
 			    </div>
-			    <div *ngIf="f.inputLoginEmail.invalid && f.inputLoginEmail.errors.email   && (f.inputLoginEmail.dirty || f.inputLoginEmail.touched)">
+			    <div *ngIf="f.inputLoginEmail.invalid && f.inputLoginEmail.errors.email   && (f.inputLoginEmail.dirty || f.inputLoginEmail.touched)" class="error-form-input">
 			      This E-mail is not valid.
 			    </div>
 
@@ -21,7 +21,7 @@
 			    <label for="inputLoginPassword">Password</label>
 			    <input type="password" class="form-control" id="inputLoginPassword" formControlName="inputLoginPassword">
 
-			    <div *ngIf="f.inputLoginPassword.invalid && f.inputLoginPassword.errors.required   && (f.inputLoginPassword.dirty || f.inputLoginPassword.touched)">
+			    <div *ngIf="f.inputLoginPassword.invalid && f.inputLoginPassword.errors.required   && (f.inputLoginPassword.dirty || f.inputLoginPassword.touched)" class="error-form-input">
 			      This Field is Required.
 			    </div>
 			  

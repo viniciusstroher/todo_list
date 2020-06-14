@@ -11,12 +11,16 @@ import { FormsModule } from '@angular/forms'
 import { ReactiveFormsModule} from '@angular/forms' 
 import { HttpClientModule } from '@angular/common/http';
 
+
+// import { TodoService } from '../services/todo.service';
+
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
     TodoNewComponent,
-    LoginComponent
+    LoginComponent,
+    // TodoService
   ],
   imports: [
     BrowserModule,
