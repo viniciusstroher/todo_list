@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { TodoListComponent } from '../views/todo-list/todo-list.component';
 import { TodoNewComponent } from '../views/todo-new/todo-new.component';
 import { LoginComponent } from '../views/login/login.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule,NgbActiveModal,NgbModal  } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'  
 import { ReactiveFormsModule} from '@angular/forms' 
 import { HttpClientModule } from '@angular/common/http';
@@ -16,12 +16,16 @@ import { TodoService } from '../services/todo.service';
 import { AuthService } from '../services/auth.service';
 import { Globals } from '../classes/globals'
 
+
+import { ModalMessageComponent } from '../components/modal-message/modal-message.component'
+
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
     TodoNewComponent,
-    LoginComponent
+    LoginComponent,
+    ModalMessageComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,7 @@ import { Globals } from '../classes/globals'
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [TodoService,AuthService,Globals],
+  providers: [TodoService,AuthService,Globals,NgbActiveModal,NgbModal,ModalMessageComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

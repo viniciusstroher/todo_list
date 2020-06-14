@@ -2,20 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl , Validators,  } from '@angular/forms';
 import { TodoService } from '../../services/todo.service';
 import { AuthService } from '../../services/auth.service';
+import {Router} from "@angular/router"
+import { NgbModule,NgbActiveModal,NgbModal  } from '@ng-bootstrap/ng-bootstrap';
 
+import { ModalMessageComponent } from '../../components/modal-message/modal-message.component'
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 
 export class LoginComponent implements OnInit {
   
   loginForm;
   isLoading = false
+  modalRef
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService ) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router,private modalService: NgbModal ) {
   	this.loginForm = new FormGroup({
 	    inputLoginEmail: new FormControl('',[Validators.required,Validators.email]),//preencher quando tiver cache 
 	    inputLoginPassword: new FormControl('',[Validators.required]),
@@ -41,7 +45,6 @@ export class LoginComponent implements OnInit {
       (error) => this.handleError(error)
     );
     
-
     this.loginForm.reset()
   }
 
@@ -56,12 +59,19 @@ export class LoginComponent implements OnInit {
 
   onSuccess(data: any): void{
     this.setLoading(false);
+    this.router.navigate(['/todo-list'])
   }
 
   handleError(error: any): void{
     this.setLoading(false);
+    this.openModal(error.message)
   }
 
+
+  openModal(message: string): void{
+    const modalRef = this.modalService.open(ModalMessageComponent);
+    modalRef.componentInstance.message = message;
+  }
 
 
   ngOnInit(): void {

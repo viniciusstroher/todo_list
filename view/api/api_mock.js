@@ -17,9 +17,14 @@ server.post('/api/auth', (req, res) => {
       parts=auth.split(/:/),                          // split on colon
       email=parts[0],
       password=parts[1];
-
-
-  	res.jsonp({auth:true,email:email,password:password})
+      
+     //passar -> testesaipos@saipos.com.br
+    if(email == "testesaipos@saipos.com.br"){
+    	res.jsonp({auth:true,email:email,password:password})
+    }else{
+    	res.status(401).jsonp({auth:false,message:"Invalid user."})
+    }
+  	
 })
 
 // To handle POST, PUT and PATCH you need to use a body-parser
