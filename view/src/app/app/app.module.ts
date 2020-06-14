@@ -12,15 +12,16 @@ import { ReactiveFormsModule} from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http';
 
 
-// import { TodoService } from '../services/todo.service';
+import { TodoService } from '../services/todo.service';
+import { AuthService } from '../services/auth.service';
+import { Globals } from '../classes/globals'
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
     TodoNewComponent,
-    LoginComponent,
-    // TodoService
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [TodoService,AuthService,Globals],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -27,7 +27,7 @@
 			  
 			  </div>
 			  <div align="right">
-			  	<button type="submit" class="btn btn-primary">Login!
+			  	<button type="submit" class="btn btn-primary" [disabled]="isLoading">Login!
 
 			  		<div class="spinner-border" role="status" *ngIf="isLoading">
 					  <span class="sr-only">Loading...</span>
