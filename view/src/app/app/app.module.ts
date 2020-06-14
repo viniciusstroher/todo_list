@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoListComponent } from '../views/todo-list/todo-list.component';
-import { TodoNewComponent } from '../views/todo-new/todo-new.component';
 import { LoginComponent } from '../views/login/login.component';
 import { NgbModule,NgbActiveModal,NgbModal  } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'  
@@ -23,7 +22,6 @@ import { ModalMessageComponent } from '../components/modal-message/modal-message
   declarations: [
     AppComponent,
     TodoListComponent,
-    TodoNewComponent,
     LoginComponent,
     ModalMessageComponent
   ],

@@ -1,0 +1,38 @@
+.task-list{
+	list-style-type: none;
+	width: 100%;
+}
+.task-item{
+	/*height: 60px;*/
+	padding: 2%;
+}
+
+.task-item:nth-child(odd){
+	background: #f7f7f7;
+}
+
+.task-item:nth-child(even){
+	background: white;
+}
+
+
+.task-item:hover{
+	background: #f6f0f0;
+	cursor:pointer;
+}
+
+.task-description{
+	max-width: 95%;
+	max-height: 20px;
+	white-space: nowrap;
+  	overflow: hidden;
+	text-overflow:ellipsis
+}
+
+.task-options button{
+	margin: 5px;
+}
+
+.filter-task-selected{
+	background: #f1f2f2;
+}
