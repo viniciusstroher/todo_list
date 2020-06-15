@@ -52,8 +52,12 @@ export class ModalTaskComponent implements OnInit {
       return
     }
     
-    if(!emailValidateData.format_valid || emailValidateData.did_you_mean != ''){
+    if(!emailValidateData.format_valid){
       this.showInvalidemail = true
+      return
+    }
+    
+    if(emailValidateData.did_you_mean != ''){
       this.didUMean = emailValidateData.did_you_mean
       return
     }

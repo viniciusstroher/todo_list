@@ -26,6 +26,9 @@
 			      This E-mail is not valid.
 			    </div>
 			    <div *ngIf="showInvalidemail" class="error-form-input">
+			      Email format invalid.
+			    </div>
+			    <div *ngIf="didUMean != ''" class="error-form-input">
 			      Did u mean {{didUMean}}?.
 			    </div>
 
