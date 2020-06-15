@@ -36,7 +36,7 @@ export class TodoListComponent implements OnInit {
     )
   }
 
-  
+
   filterTasksPending(): any{
   	return this.tasks.filter(task => task.status == 'PENDING')
   }
@@ -77,7 +77,7 @@ export class TodoListComponent implements OnInit {
 
   onSuccess(data: any): void{
     this.tasks = data
-    this.visibleTasks = this.filterTasksPending()
+    this.visibleTasks =  this.showCompletedTask ? this.filterTasksPending() : this.filterTasksCompleted()
   }
 
   handleError(error: any): void{

@@ -7,7 +7,7 @@
       "responsibleEmail": "3132132@edawdawdw",
       "description": "dawdwadwadwa",
       "status": "COMPLETED",
-      "tries": 7,
+      "tries":1,
       "createdAt": "2020-06-15 12:54:47"
     },
     {
@@ -17,7 +17,7 @@
       "responsibleEmail": "dwadwa@dwadadw",
       "description": "dwdawdawdaw",
       "status": "COMPLETED",
-      "tries": 6,
+      "tries": 1,
       "createdAt": "2020-06-15 12:55:23"
     },
     {
@@ -37,7 +37,7 @@
       "responsibleEmail": "3132132@edawdawdw",
       "description": "dawdwadwadwa",
       "status": "COMPLETED",
-      "tries": 7,
+      "tries": 1,
       "createdAt": "2020-06-15 12:54:47"
     },
     {
@@ -47,7 +47,7 @@
       "responsibleEmail": "dwadwa@dwadadw",
       "description": "dwdawdawdaw",
       "status": "COMPLETED",
-      "tries": 6,
+      "tries": 1,
       "createdAt": "2020-06-15 12:55:23"
     },
     {
@@ -57,7 +57,7 @@
       "responsibleEmail": "dwwaddw@dwadaw",
       "description": "dwadwadwadwa",
       "status": "COMPLETED",
-      "tries": 3,
+      "tries": 1,
       "createdAt": "2020-06-15 01:09:27"
     }
   ]
