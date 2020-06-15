@@ -79,7 +79,7 @@
 		<button type="button" *ngIf="task.id != 0" [disabled]="task.status == 'PENDING'" class="btn btn-danger" (click)="requestPendingTask()">Pending Task!</button>
 		<button type="button" *ngIf="task.id != 0" [disabled]="task.status == 'COMPLETED'" class="btn btn-success" (click)="completeTask()">Complete Task!</button>
 
-		<button type="button"  class="btn btn-secondary" (click)="activeModal.close(updated)">Cancel</button>
+		<button type="button"  class="btn btn-secondary" (click)="activeModal.close(updated)">Close</button>
 
 		<button type="submit" [disabled]="task.status == 'COMPLETED'" class="btn btn-danger" class="btn btn-primary" [disabled]="isLoading">Save
 	  		<div class="spinner-border" role="status" *ngIf="isLoading">

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { Router } from '@angular/router'
 import * as moment from 'moment';
 import { ModalTaskComponent } from '../../components/modal-task/modal-task.component'
-import {Router} from "@angular/router"
-import { NgbModule,NgbActiveModal,NgbModal  } from '@ng-bootstrap/ng-bootstrap';
-import { TodoService } from '../../services/todo.service';
+
+import { NgbModule,NgbActiveModal,NgbModal  } from '@ng-bootstrap/ng-bootstrap'
+import { TodoService } from '../../services/todo.service'
+import { AuthService } from '../../services/auth.service'
+
 
 @Component({
   selector: 'app-todo-list',
@@ -21,10 +24,25 @@ export class TodoListComponent implements OnInit {
 
   modalOpen = false
 
-  constructor(private modalService: NgbModal, private todoService: TodoService) { }
+  constructor(private modalService: NgbModal, private todoService: TodoService,private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.getTasks()
+  }
+
+
+  logout():void{
+    this.authService.setBasicAuth(null)
+    this.router.navigate(['/login']);
+  }
+
+  requestNewTasks():void{
+    let tasksResponse: any = this.todoService.requestNewTasks()     
+
+    tasksResponse.subscribe(
+      (data) => this.onSuccess(data),
+      (error) => this.handleError(error)
+    )
   }
 
   getTasks(): void{
@@ -77,7 +95,7 @@ export class TodoListComponent implements OnInit {
 
   onSuccess(data: any): void{
     this.tasks = data
-    this.visibleTasks =  this.showCompletedTask ? this.filterTasksPending() : this.filterTasksCompleted()
+    this.visibleTasks =  !this.showCompletedTask ? this.filterTasksPending() : this.filterTasksCompleted()
   }
 
   handleError(error: any): void{

@@ -19,6 +19,8 @@ import { Globals } from '../classes/globals'
 import { ModalMessageComponent } from '../components/modal-message/modal-message.component'
 import { ModalTaskComponent } from '../components/modal-task/modal-task.component'
 
+import { AuthGuardService } from '../guards/auth-guard.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,7 @@ import { ModalTaskComponent } from '../components/modal-task/modal-task.componen
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [TodoService,AuthService,Globals,NgbActiveModal,NgbModal,ModalMessageComponent,ModalTaskComponent],
+  providers: [TodoService,AuthService,Globals,NgbActiveModal,NgbModal,ModalMessageComponent,ModalTaskComponent,AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

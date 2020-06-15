@@ -54,12 +54,12 @@ export class TodoService {
   	}
 
   	requestNewTasks(): Observable<any> {
-	  const url = `${this.authService.endpointUrl}/request_tasks`;
+	  const url = `${this.authService.endpointUrl}/tasks?type=request_new`;
 	  
 	  let httpOptions = Object.assign({}, this.httpOptions);
 	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
 
-	  return this.http.post<any>(url,{},httpOptions).pipe(
+	  return this.http.get<any>(url,httpOptions).pipe(
 	      // retry(3),
 	      catchError(this.handleError)
 	  );
