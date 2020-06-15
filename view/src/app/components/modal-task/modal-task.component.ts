@@ -47,8 +47,7 @@ export class ModalTaskComponent implements OnInit {
     let emailValidateData 
     try{
       emailValidateData= await this.todoService.verifyEmail(this.taskForm.value.inputTaskEmail)
-      console.log(emailValidateData)
-  
+
     }catch(ex){
       return
     }
