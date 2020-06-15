@@ -1,0 +1,37 @@
+# Node Version
+## Feito no node v10.18.1
+## Db:sqlite usando timezone - UTC 00:00
+## Basic Auth 
+
+# Para instalar projetos e dependencias
+npm install
+
+# Iniciando API
+npm start
+
+# Usuario/Sennha : testesaipos@saipos.com.br/testesaipos@saipos.com.br
+
+
+# inicializar db - Sqlite (PS: Coloquei sqlite por ser bem portavel :))
+
+## migrate
+node_modules\.bin\sequelize db:migrate --debug
+
+## desfaz migrate
+node_modules\.bin\sequelize db:migrate:undo:all
+
+## faz seeds
+node_modules\.bin\sequelize db:seed:all --debug
+
+
+## remake db
+node_modules\.bin\sequelize db:migrate:undo:all && node_modules\.bin\sequelize db:migrate --debug
+
+## desfaz seeds
+node_modules\.bin\sequelize db:seed:undo:all && node_modules\.bin\sequelize db:seed:all --debug
+
+
+## remake seed
+node_modules\.bin\sequelize db:seed:undo:all && node_modules\.bin\sequelize db:seed:all --debug
+
+
