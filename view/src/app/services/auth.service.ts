@@ -10,19 +10,34 @@ import { Globals } from '../classes/globals'
 })
 export class AuthService {
 
-  	private endpointUrl = this.globals.endpointUrl+'/api/auth';  // URL to web api
+  	endpointUrl = this.globals.endpointUrl;  // URL to web api
 
   	httpOptions = {
     	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   	};
 
+  	authorizationToken
+
+ 	generateBasicAuthString(email:string,password:string):string {
+ 		return btoa(email+":"+password)
+ 	}
+
+ 	setBasicAuth(auth: string): void {
+ 		localStorage.setItem('authorizationToken', auth);
+	  	this.authorizationToken = auth
+	}
+
+	getBasicAuth(): string{
+		return this.authorizationToken || localStorage.getItem('authorizationToken') 
+	}
+
   	constructor(private http: HttpClient,private globals: Globals) { }
 
-  	auth(email: string, password: string): Observable<any> {
-	  const url = `${this.endpointUrl}`;
+  	auth(auth:string): Observable<any> {
+	  const url = `${this.endpointUrl}/auth`;
 	  
 	  let httpOptions = Object.assign({}, this.httpOptions);
-	  httpOptions.headers = httpOptions.headers.append('Authorization','Basic '+btoa(email+":"+password))
+	  httpOptions.headers = httpOptions.headers.append('Authorization','Basic '+auth)
 
 	  return this.http.post<any>(url,{},httpOptions).pipe(
 	      // retry(3),

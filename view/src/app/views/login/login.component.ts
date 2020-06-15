@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl , Validators,  } from '@angular/forms';
-import { TodoService } from '../../services/todo.service';
 import { AuthService } from '../../services/auth.service';
 import {Router} from "@angular/router"
 import { NgbModule,NgbActiveModal,NgbModal  } from '@ng-bootstrap/ng-bootstrap';
 
 import { ModalMessageComponent } from '../../components/modal-message/modal-message.component'
+import { Globals } from '../../classes/globals'
 
 @Component({
   selector: 'app-login',
@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
   isLoading = false
   modalRef
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router,private modalService: NgbModal ) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router,private modalService: NgbModal, private globals: Globals ) {
   	this.loginForm = new FormGroup({
-	    inputLoginEmail: new FormControl('',[Validators.required,Validators.email]),//preencher quando tiver cache 
+	    inputLoginEmail: new FormControl('',[Validators.required,Validators.email]),
 	    inputLoginPassword: new FormControl('',[Validators.required]),
 	},{updateOn:'submit'});
  
@@ -38,14 +38,16 @@ export class LoginComponent implements OnInit {
 
     this.setLoading(true);
 
-    let authResponse: any = this.authService.auth(this.loginForm.value.inputLoginEmail,this.loginForm.value.inputLoginPassword)     
+    const auth = this.authService.generateBasicAuthString(this.loginForm.value.inputLoginEmail,this.loginForm.value.inputLoginPassword)
+
+    let authResponse: any = this.authService.auth(auth)     
 
     authResponse.subscribe(
       (data) => this.onSuccess(data),
       (error) => this.handleError(error)
     );
     
-    this.loginForm.reset()
+    // this.loginForm.reset()
   }
 
 
@@ -59,6 +61,11 @@ export class LoginComponent implements OnInit {
 
   onSuccess(data: any): void{
     this.setLoading(false);
+      
+    //registra authorizacao
+    const auth = this.authService.generateBasicAuthString(this.loginForm.value.inputLoginEmail,this.loginForm.value.inputLoginPassword)
+    this.authService.setBasicAuth(auth)
+
     this.router.navigate(['/todo-list'])
   }
 

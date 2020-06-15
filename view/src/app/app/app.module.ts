@@ -17,13 +17,15 @@ import { Globals } from '../classes/globals'
 
 
 import { ModalMessageComponent } from '../components/modal-message/modal-message.component'
+import { ModalTaskComponent } from '../components/modal-task/modal-task.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoListComponent,
     LoginComponent,
-    ModalMessageComponent
+    ModalMessageComponent,
+    ModalTaskComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,7 @@ import { ModalMessageComponent } from '../components/modal-message/modal-message
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [TodoService,AuthService,Globals,NgbActiveModal,NgbModal,ModalMessageComponent],
+  providers: [TodoService,AuthService,Globals,NgbActiveModal,NgbModal,ModalMessageComponent,ModalTaskComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

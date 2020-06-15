@@ -1,1 +1,90 @@
-<p>modal-task works!</p>
+<div class="modal-header">
+	<h4 class="modal-title" id="modal-title">Task  <span *ngIf="task.id != 0"> - <b>{{task.id}}</b></span> </h4>
+	<button type="button" class="close" aria-describedby="modal-title" (click)="activeModal.close(updated)">
+	  <span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+	<div class="modal-body">
+		
+
+			  <div class="form-group">
+			  	<label for="inputTaskName">Name</label>
+			    <input type="text" class="form-control" id="inputTaskName" aria-describedby="emailHelp" formControlName="inputTaskName">
+			    <div *ngIf="f.inputTaskName.invalid && f.inputTaskName.errors.required   && (f.inputTaskName.dirty || f.inputTaskName.touched)" class="error-form-input">
+			      This Field is Required.
+			    </div>
+			 </div>
+			 <div class="form-group">
+			    <label for="inputTaskEmail">Email</label>
+			    <input type="email" class="form-control" id="inputTaskEmail" aria-describedby="emailHelp" formControlName="inputTaskEmail">
+			   
+			    <div *ngIf="f.inputTaskEmail.invalid && f.inputTaskEmail.errors.required   && (f.inputTaskEmail.dirty || f.inputTaskEmail.touched)" class="error-form-input">
+			      This Field is Required.
+			    </div>
+			    <div *ngIf="f.inputTaskEmail.invalid && f.inputTaskEmail.errors.email   && (f.inputTaskEmail.dirty || f.inputTaskEmail.touched)" class="error-form-input">
+			      This E-mail is not valid.
+			    </div>
+
+			  </div>
+
+			  <div class="form-group">
+			    <label for="inputTaskDescription">Description</label>
+			    <textarea class="form-control" id="inputTaskDescription" formControlName="inputTaskDescription" rows="3"></textarea>
+
+			    <div *ngIf="f.inputTaskDescription.invalid && f.inputTaskDescription.errors.required   && (f.inputTaskDescription.dirty || f.inputTaskDescription.touched)" class="error-form-input">
+			      This Field is Required.
+			    </div>
+			  
+			  </div>
+
+			  <div class="form-group" *ngIf="task.id != 0" align="center">
+			    <label for="inputTaskDescription" class="font-weight-bold color-red">Status: {{task.status}}</label>
+
+			  </div>
+			  <div class="form-group" *ngIf="task.id != 0" align="center">
+			     <label for="inputTaskDescription" class="font-weight-bold color-red">Created At: {{task.createdAt | date:'dd/MM/yyyy hh:mm'}}</label>
+			    
+			  </div>
+			  <div class="form-group" *ngIf="task.id != 0 && task.tries > 0" align="center">
+			     <label for="inputTaskDescription" class="font-weight-bold color-red">Pendings : {{task.tries}}</label>
+			  </div>
+
+			  <div class="form-group" *ngIf="showinputTaskPasswordPermitPending d">
+			    <label for="inputTaskPasswordPermitPending">Password To Pending</label>
+			    <div class="d-flex flex-row">
+				    <input type="password" class="form-control w-75" id="inputTaskPasswordPermitPending" formControlName="inputTaskPasswordPermitPending">
+				    <button type="button" class="btn btn-success" (click)="checkPassword()">Peding!</button>
+				    <button type="button" class="btn btn-danger" (click)="closeRequestPendingTask()">X</button>
+			    </div>
+			    <div *ngIf="requiredPassword" class="error-form-input">
+			      This Field is Required.
+			    </div>
+
+			    <div *ngIf="passwordError" class="error-form-input">
+			      Invalid password.
+			    </div>
+
+
+			  
+			  </div>
+			  
+			  <div *ngIf="showMaxPendingTask" class="error-form-input" align="center">
+			      You can put this task on pending only 2 times
+			    </div>
+			
+	</div>
+
+	<div class="modal-footer">
+		<button type="button" *ngIf="task.id != 0" [disabled]="task.status == 'PENDING'" class="btn btn-danger" (click)="requestPendingTask()">Pending Task!</button>
+		<button type="button" *ngIf="task.id != 0" [disabled]="task.status == 'COMPLETED'" class="btn btn-success" (click)="completeTask()">Complete Task!</button>
+
+		<button type="button"  class="btn btn-secondary" (click)="activeModal.close(updated)">Cancel</button>
+
+		<button type="submit" [disabled]="task.status == 'COMPLETED'" class="btn btn-danger" class="btn btn-primary" [disabled]="isLoading">Save
+	  		<div class="spinner-border" role="status" *ngIf="isLoading">
+			  <span class="sr-only">Loading...</span>
+			</div>
+	  	</button>
+	</div>
+</form>

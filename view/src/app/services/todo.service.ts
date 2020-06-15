@@ -1,46 +1,72 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, tap, retry } from 'rxjs/operators';
 
+import { AuthService } from './auth.service'
 
 @Injectable({
   providedIn: 'root'
 })
-
 export class TodoService {
-
-	private endPointUrl = 'api/todo';  // URL to web api
 
   	httpOptions = {
     	headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   	};
 
-  	constructor(private http: HttpClient) { }
+  	constructor(private http: HttpClient, private authService: AuthService) {
+  	 }
 
-  	// getTasks(): Observable<any> {
-	  // const url = `${this.endPointUrl}`;
-	  // return this.http.get<any>(url).pipe(
-	  //    tap(_ => this.log(`getTasks error`)),
-	  //    catchError(this.handleError<any>(`getTasks error`))
-	  // );
-  	// }
+  	createTask(task: any): Observable<any> {
+	  const url = `${this.authService.endpointUrl}/tasks`;
+	  
+	  let httpOptions = Object.assign({}, this.httpOptions);
+	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
 
-  	// private handleError<T>(operation = 'operation', result?: T) {
-	  //   return (error: any): Observable<T> => {
+	  return this.http.post<any>(url,task,httpOptions).pipe(
+	      // retry(3),
+	      catchError(this.handleError)
+	  );
+  	}
 
-	  //     // TODO: send the error to remote logging infrastructure
-	  //     console.error(error); // log to console instead
+  	updateTask(id:number,task: any): Observable<any> {
+	  const url = `${this.authService.endpointUrl}/tasks/${id}`;
+	  
+	  let httpOptions = Object.assign({}, this.httpOptions);
+	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
 
-	  //     // TODO: better job of transforming error for user consumption
-	  //     this.log(`${operation} failed: ${error.message}`);
+	  return this.http.put<any>(url,task,httpOptions).pipe(
+	      // retry(3),
+	      catchError(this.handleError)
+	  );
+  	}
 
-	  //     // Let the app keep running by returning an empty result.
-	  //     return of(result as T);
-	  //   };
-	  // }
+  	getTasks(): Observable<any> {
+	  const url = `${this.authService.endpointUrl}/tasks`;
+	  
+	  let httpOptions = Object.assign({}, this.httpOptions);
+	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
 
-	  // private log(message: string) {
-	  //   console.log(`TodoService: ${message}`);
-	  // }
+	  return this.http.get<any>(url,httpOptions).pipe(
+	      // retry(3),
+	      catchError(this.handleError)
+	  );
+  	}
+
+  	requestNewTasks(): Observable<any> {
+	  const url = `${this.authService.endpointUrl}/request_tasks`;
+	  
+	  let httpOptions = Object.assign({}, this.httpOptions);
+	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
+
+	  return this.http.post<any>(url,{},httpOptions).pipe(
+	      // retry(3),
+	      catchError(this.handleError)
+	  );
+  	}
+
+  	private handleError(error: HttpErrorResponse) {
+	  return throwError(error.error);
+	};
+
 }

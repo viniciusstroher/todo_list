@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { ModalTaskComponent } from '../../components/modal-task/modal-task.component'
+import {Router} from "@angular/router"
+import { NgbModule,NgbActiveModal,NgbModal  } from '@ng-bootstrap/ng-bootstrap';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -15,27 +19,24 @@ export class TodoListComponent implements OnInit {
   showOwner = true
   showCompletedTask = false
 
-  constructor() { }
+  modalOpen = false
+
+  constructor(private modalService: NgbModal, private todoService: TodoService) { }
 
   ngOnInit(): void {
-  	this.tasks = [{id: 1,
-  		   responsibleName: "Vinicius",
-  		   responsibleEmail: "viniciusferreirawk@gmail.com", 
-  		   description:"teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste",
-  		   status:'PENDING',
-  		   createdAt: this.now.format('DD/MM/YYYY hh:mm')},
-  		   {id: 2,
-  		   responsibleName: "Vinicius",
-  		   responsibleEmail: "viniciusferreirawk@gmail.com", 
-  		   description:"teste2 teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste",
-  		   status:'COMPLETED',
-  		   createdAt: this.now.format('DD/MM/YYYY hh:mm')}];
-
-  	this.visibleTasks = this.filterTasksPending();
-  	// this.visibleTasks = []
-
+    this.getTasks()
   }
 
+  getTasks(): void{
+    let tasksResponse: any = this.todoService.getTasks()     
+
+    tasksResponse.subscribe(
+      (data) => this.onSuccess(data),
+      (error) => this.handleError(error)
+    )
+  }
+
+  
   filterTasksPending(): any{
   	return this.tasks.filter(task => task.status == 'PENDING')
   }
@@ -44,13 +45,42 @@ export class TodoListComponent implements OnInit {
 	return this.tasks.filter(task => task.status == 'COMPLETED')
   }
 
-  toogleTasks(): void{
-  	if(!this.showCompletedTask){
-  		this.showCompletedTask = true
-  		this.visibleTasks = this.filterTasksCompleted()
-  	}else{
-  		this.showCompletedTask = false
-  		this.visibleTasks = this.filterTasksPending()
+  filterTask(filter: string): void{
+  	switch(filter){
+  		case 'PENDING':
+	  		this.showCompletedTask = false
+	  		this.visibleTasks = this.filterTasksPending()
+  			break
+
+  		case 'COMPLETED':
+  			this.showCompletedTask = true
+  			this.visibleTasks = this.filterTasksCompleted()
+  			break
   	}
   }
+
+  openTaskModal(task: any): void{
+  	
+    this.modalOpen = true
+  	
+    let self = this
+    
+    const modalRef = this.modalService.open(ModalTaskComponent)
+    modalRef.componentInstance.task = task
+    modalRef.result.then(function (updated) {
+        self.modalOpen = false 
+        if(updated){
+          self.getTasks()
+        }
+    });
+  }
+
+  onSuccess(data: any): void{
+    this.tasks = data
+    this.visibleTasks = this.filterTasksPending()
+  }
+
+  handleError(error: any): void{
+  }
+ 
 }
