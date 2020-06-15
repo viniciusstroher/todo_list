@@ -1,0 +1,19 @@
+# Node Version
+## Feito no node v10.18.1
+## Db:sqlite usando timezone - UTC 00:00
+## Basic Auth 
+
+# Para instalar projetos e dependencias
+npm install
+
+# Iniciando API
+cd api
+npm install
+npm start
+
+# Iniciando App
+cd view
+npm install
+npm start
+
+# Usuario/Sennha : testesaipos@saipos.com.br/testesaipos@saipos.com.br
