@@ -25,6 +25,9 @@
 			    <div *ngIf="f.inputTaskEmail.invalid && f.inputTaskEmail.errors.email   && (f.inputTaskEmail.dirty || f.inputTaskEmail.touched)" class="error-form-input">
 			      This E-mail is not valid.
 			    </div>
+			    <div *ngIf="showInvalidemail" class="error-form-input">
+			      Did u mean {{didUMean}}?.
+			    </div>
 
 			  </div>
 

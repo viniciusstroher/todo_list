@@ -21,7 +21,7 @@ export class TodoService {
 	  const url = `${this.authService.endpointUrl}/tasks`;
 	  
 	  let httpOptions = Object.assign({}, this.httpOptions);
-	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
+	  httpOptions.headers = httpOptions.headers.append('Authorization','Basic '+this.authService.getBasicAuth())
 
 	  return this.http.post<any>(url,task,httpOptions).pipe(
 	      // retry(3),
@@ -33,7 +33,7 @@ export class TodoService {
 	  const url = `${this.authService.endpointUrl}/tasks/${id}`;
 	  
 	  let httpOptions = Object.assign({}, this.httpOptions);
-	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
+	  httpOptions.headers = httpOptions.headers.append('Authorization','Basic '+this.authService.getBasicAuth())
 
 	  return this.http.put<any>(url,task,httpOptions).pipe(
 	      // retry(3),
@@ -45,7 +45,7 @@ export class TodoService {
 	  const url = `${this.authService.endpointUrl}/tasks`;
 	  
 	  let httpOptions = Object.assign({}, this.httpOptions);
-	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
+	  httpOptions.headers = httpOptions.headers.append('Authorization','Basic '+this.authService.getBasicAuth())
 
 	  return this.http.get<any>(url,httpOptions).pipe(
 	      // retry(3),
@@ -57,7 +57,7 @@ export class TodoService {
 	  const url = `${this.authService.endpointUrl}/tasks?type=request_new`;
 	  
 	  let httpOptions = Object.assign({}, this.httpOptions);
-	  httpOptions.headers = httpOptions.headers.append('Authorization',this.authService.getBasicAuth())
+	  httpOptions.headers = httpOptions.headers.append('Authorization','Basic '+this.authService.getBasicAuth())
 
 	  return this.http.get<any>(url,httpOptions).pipe(
 	      // retry(3),
@@ -68,5 +68,16 @@ export class TodoService {
   	private handleError(error: HttpErrorResponse) {
 	  return throwError(error.error);
 	};
+
+
+	async verifyEmail(email:string): Promise<any>{
+		const url = `${this.authService.endpointUrl}/verify_email?email=${email}`;
+		  
+		let httpOptions = Object.assign({}, this.httpOptions);
+		httpOptions.headers = httpOptions.headers.append('Authorization','Basic '+this.authService.getBasicAuth())
+
+		return await this.http.get<any>(url,httpOptions).toPromise()
+  	}
+	
 
 }

@@ -5,7 +5,6 @@ module.exports = {
     return queryInterface.bulkInsert('Tasks', [{
       "id": 1,
       "userId":1,
-      "responsibleId": 1,
       "responsibleName": "Vinicius F Stroher",
       "responsibleEmail": "viniciusferreirawk@gmail.com",
       "description": "Tarefa de teste 1",
@@ -16,7 +15,6 @@ module.exports = {
     },{
       "id": 2,
       "userId":1,
-      "responsibleId": 1,
       "responsibleName": "Vinicius F Stroher",
       "responsibleEmail": "viniciusferreirawk@gmail.com",
       "description": "Tarefa de teste 2",

@@ -25,10 +25,6 @@ module.exports = {
         type: Sequelize.STRING
       },
 
-      responsibleId: {
-        type: Sequelize.INTEGER
-      },
-
       responsibleName: {
         type: Sequelize.STRING
       },

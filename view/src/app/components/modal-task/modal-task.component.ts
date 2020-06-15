@@ -15,6 +15,9 @@ export class ModalTaskComponent implements OnInit {
   taskForm
   now = moment()
 
+  showInvalidemail = false
+  didUMean = ""
+
   //handle peding task request
   showinputTaskPasswordPermitPending=false
   inputTaskPasswordPermitPending=""
@@ -32,17 +35,32 @@ export class ModalTaskComponent implements OnInit {
 
   get f() { return this.taskForm.controls; }
 
-  onSubmit():void{
+  async onSubmit():Promise<void>{
     this.showMaxPendingTask = false
+    this.showInvalidemail = false
     this.taskForm.markAllAsTouched();
     
     if (this.taskForm.invalid) {
         return;
     }
 
+    let emailValidateData 
+    try{
+      emailValidateData= await this.todoService.verifyEmail(this.taskForm.value.inputTaskEmail)
+      console.log(emailValidateData)
+  
+    }catch(ex){
+      return
+    }
+    
+    if(!emailValidateData.format_valid || emailValidateData.did_you_mean != ''){
+      this.showInvalidemail = true
+      this.didUMean = emailValidateData.did_you_mean
+      return
+    }
+
     this.setLoading(true)
     this.task = {id:this.task.id != 0 ? this.task.id : 0,
-                responsibleId:this.task.responsibleId != 0 ? this.task.responsibleId : null,
                 responsibleName:this.taskForm.value.inputTaskName,
                 responsibleEmail:this.taskForm.value.inputTaskEmail,
                 description:this.taskForm.value.inputTaskDescription,
@@ -145,7 +163,6 @@ export class ModalTaskComponent implements OnInit {
   ngOnInit(): void {
   	if(this.task == null){
   		this.task = {id:0,
-                  responsibleId:null,
     			  		  responsibleName:null,
     			  		  responsibleEmail:null,
     			  		  description:null,

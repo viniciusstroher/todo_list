@@ -10,6 +10,7 @@
   "author": "Vinicius Ferreira Stroher",
   "license": "ISC",
   "devDependencies": {
+    "axios": "^0.19.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-polyfill": "^6.26.0",
