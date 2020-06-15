@@ -3,9 +3,6 @@
 ## Db:sqlite usando timezone - UTC 00:00
 ## Basic Auth 
 
-# Para instalar projetos e dependencias
-npm install
-
 # Iniciando API
 cd api
 npm install
